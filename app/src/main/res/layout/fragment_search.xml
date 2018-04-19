@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Search">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Keyword"
+        android:textSize="15dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/keyword_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please enter mandatory field"
+        android:textSize="15dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="38dp"
+        android:textColor="#FF0800"
+        android:visibility="invisible"/>
+
+    <EditText
+        android:id="@+id/keyword_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Keyword"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginRight="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Category"
+        android:textSize="15dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="95dp"/>
+    
+    <Spinner
+        android:id="@+id/category_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="130dp">
+    </Spinner>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance (in miles)"
+        android:textSize="15dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="170dp"/>
+
+    <EditText
+        android:id="@+id/distance_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter distance (default 10 miles)"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="195dp"
+        android:layout_marginRight="25dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="From"
+        android:textSize="15dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="255dp"/>
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/location_radiogroup"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="280dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp">
+        <RadioButton android:id="@+id/current_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current location"/>
+        <RadioButton android:id="@+id/other_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other. Specify Location"/>
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/location_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Please enter mandatory field"
+        android:textSize="15dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="341dp"
+        android:textColor="#FF0800"
+        android:visibility="invisible"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/location_autocomplete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Type in the location"
+        android:layout_marginTop="350dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="25dp"/>
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="SEARCH"
+        android:layout_marginTop="410dp"
+        android:layout_marginLeft="25dp"/>
+
+    <Button
+        android:id="@+id/clear_button"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="CLEAR"
+        android:layout_marginTop="410dp"
+        android:layout_marginLeft="215dp"
+        android:layout_marginRight="25dp"/>
+
+</RelativeLayout>
