@@ -1,5 +1,6 @@
 package com.usc.divyajagadeesh.travelandentertainment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -48,6 +49,9 @@ import static android.view.View.VISIBLE;
  * create an instance of this fragment.
  */
 public class Search extends Fragment {
+
+    private static final String TAG = "Search";
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -166,6 +170,11 @@ public class Search extends Fragment {
 
                 if (validated == 1){
 
+                    // progress dialog while data is loading
+                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setMessage("Fetching results");
+                    progressDialog.show();
+
                     // get form fields
                     String keywordInput = keyword_check.getText().toString();
                     String categoryInput = spinner.getSelectedItem().toString();
@@ -231,15 +240,16 @@ public class Search extends Fragment {
                     String url = "http://travelandentertainment.us-east-2.elasticbeanstalk.com/places?keyword=" +
                             keywordInput + "&type=" + categoryInput + "&radius=" + distanceNum +
                             "&lat=" + latitude + "&lon=" + longitude;
+                    Log.d(TAG, "onClick: " + url);
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            try {
-                                Log.d("response", response.toString(4));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+//                            try {
+//                                Log.d("response", response.toString(4));
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
 
                             // transition to search results page
                             String json = response.toString();

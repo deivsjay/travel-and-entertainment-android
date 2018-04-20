@@ -21,12 +21,41 @@
             android:textColor="#FFF"/>
 
     </android.support.v7.widget.Toolbar>
+
     
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="550dp"
         android:id="@+id/search_recycler_view">
 
     </android.support.v7.widget.RecyclerView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_margin="5dp">
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Previous"
+            android:clickable="false"
+            android:id="@+id/previous"
+            android:textColor="#808080"/>
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/next"
+            android:textColor="#000"
+            android:clickable="true"/>
+
+
+    </LinearLayout>
+
+
 
 </LinearLayout>
