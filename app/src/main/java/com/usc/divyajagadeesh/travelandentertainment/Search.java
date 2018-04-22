@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -28,6 +29,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -48,7 +55,7 @@ import static android.view.View.VISIBLE;
  * Use the {@link Search#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Search extends Fragment {
+public class Search extends Fragment implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "Search";
 
@@ -65,6 +72,13 @@ public class Search extends Fragment {
     // current location
     double latitude = 34.0266;
     double longitude = -118.2831;
+
+    // autocomplete
+    private AutoCompleteTextView autoCompleteTextView;
+    private PlaceAutocompleteAdapter placeAutoCompleteAdapter;
+    private GeoDataClient mGoogleApiClient;
+    private static final LatLngBounds LAT_LNG_BOUNDS = new LatLngBounds(new LatLng(-140, -168), new LatLng(71, 136));
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -106,6 +120,15 @@ public class Search extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view =  inflater.inflate(R.layout.fragment_search, container, false);
+
+        // autocomplete
+        autoCompleteTextView = view.findViewById(R.id.location_autocomplete);
+        placeAutoCompleteAdapter = new PlaceAutocompleteAdapter(getActivity(),
+                Places.getGeoDataClient(getActivity(), null),
+                LAT_LNG_BOUNDS,
+                null);
+
+        autoCompleteTextView.setAdapter(placeAutoCompleteAdapter);
 
         // category spinner
         final Spinner spinner = (Spinner) view.findViewById(R.id.category_spinner);
@@ -176,8 +199,8 @@ public class Search extends Fragment {
                     progressDialog.show();
 
                     // get form fields
-                    String keywordInput = keyword_check.getText().toString();
-                    String categoryInput = spinner.getSelectedItem().toString();
+                    final String keywordInput = keyword_check.getText().toString();
+                    final String categoryInput = spinner.getSelectedItem().toString();
                     final TextView distance = (TextView)view.findViewById(R.id.distance_edittext);
                     String distanceString = distance.getText().toString();
                     double distanceNum = 10;
@@ -241,20 +264,21 @@ public class Search extends Fragment {
                             keywordInput + "&type=" + categoryInput + "&radius=" + distanceNum +
                             "&lat=" + latitude + "&lon=" + longitude;
                     Log.d(TAG, "onClick: " + url);
+                    final double finalDistanceNum = distanceNum;
                     JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-
-//                            try {
-//                                Log.d("response", response.toString(4));
-//                            } catch (JSONException e) {
-//                                e.printStackTrace();
-//                            }
 
                             // transition to search results page
                             String json = response.toString();
                             Intent intent = new Intent(getActivity(), ResultsActivity.class);
                             intent.putExtra("json", json);
+                            intent.putExtra("keyword", keywordInput);
+                            intent.putExtra("type", categoryInput);
+                            intent.putExtra("radius", Double.toString(finalDistanceNum));
+                            intent.putExtra("lat", Double.toString(latitude));
+                            intent.putExtra("lon", Double.toString(longitude));
+                            progressDialog.hide();
                             startActivity(intent);
 
                         }
@@ -298,6 +322,11 @@ public class Search extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 
     /**

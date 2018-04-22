@@ -50,8 +50,8 @@
             android:layout_height="wrap_content"
             android:text="Next"
             android:id="@+id/next"
-            android:textColor="#000"
-            android:clickable="true"/>
+            android:textColor="#808080"
+            android:clickable="false"/>
 
 
     </LinearLayout>
