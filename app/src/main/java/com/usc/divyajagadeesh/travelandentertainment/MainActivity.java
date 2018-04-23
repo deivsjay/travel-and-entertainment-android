@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements Search.OnFragment
 
 
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tablayout);
-        tabLayout.addTab(tabLayout.newTab().setText("SEARCH"));
-        tabLayout.addTab(tabLayout.newTab().setText("FAVORITES"));
+        tabLayout.addTab(tabLayout.newTab().setText("SEARCH").setIcon(R.drawable.search));
+        tabLayout.addTab(tabLayout.newTab().setText("FAVORITES").setIcon(R.drawable.heart_fill_white));
         tabLayout.setTabGravity(tabLayout.GRAVITY_FILL);
 
         // add icon next to SEARCH in search tab

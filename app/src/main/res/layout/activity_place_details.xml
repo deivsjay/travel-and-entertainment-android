@@ -17,12 +17,37 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-
-        <TextView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_white_24dp"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/placeDetails_back"
+            android:background="@color/colorPrimary"/>
+
+
+        <TextView
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
             android:text="Dummy Place Name"
-            android:textSize="20dp"/>
+            android:textSize="20dp"
+            android:id="@+id/place_name"
+            android:textColor="#FFF"
+            android:singleLine="true"
+            android:ellipsize="end"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/share"
+            android:padding="10dp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/heart_fill_white"
+            android:padding="10dp"/>
 
     </android.support.v7.widget.Toolbar>
     

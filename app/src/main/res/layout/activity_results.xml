@@ -13,6 +13,15 @@
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_back_white_24dp"
+            android:layout_marginRight="10dp"
+            android:padding="10dp"
+            android:id="@+id/searchResults_back"
+            android:background="@color/colorPrimary"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

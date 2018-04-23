@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -32,12 +34,15 @@ public class ResultsActivity extends AppCompatActivity {
     private ArrayList<String> mImgUrls1 = new ArrayList<>();
     private ArrayList<String> mPlaceNames1 = new ArrayList<>();
     private ArrayList<String> mPlaceLocations1 = new ArrayList<>();
+    private ArrayList<String> mPlaceIds1 = new ArrayList<>();
     private ArrayList<String> mImgUrls2 = new ArrayList<>();
     private ArrayList<String> mPlaceNames2 = new ArrayList<>();
     private ArrayList<String> mPlaceLocations2 = new ArrayList<>();
+    private ArrayList<String> mPlaceIds2 = new ArrayList<>();
     private ArrayList<String> mImgUrls3 = new ArrayList<>();
     private ArrayList<String> mPlaceNames3 = new ArrayList<>();
     private ArrayList<String> mPlaceLocations3 = new ArrayList<>();
+    private ArrayList<String> mPlaceIds3 = new ArrayList<>();
     private int pageNum = 1;
     private String keyword;
     private String type;
@@ -125,6 +130,15 @@ public class ResultsActivity extends AppCompatActivity {
 
             }
         });
+
+        ImageButton back = (ImageButton)findViewById(R.id.searchResults_back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     private JSONObject  getIncomingIntent() {
@@ -278,20 +292,24 @@ public class ResultsActivity extends AppCompatActivity {
                 String curr_name = results.getJSONObject(i).getString("name");
                 String curr_img = results.getJSONObject(i).getString("icon");
                 String curr_loc = results.getJSONObject(i).getString("vicinity");
+                String curr_placeid = results.getJSONObject(i).getString("place_id");
                 if (pageNum == 1){
                     mImgUrls1.add(curr_img);
                     mPlaceNames1.add(curr_name);
                     mPlaceLocations1.add(curr_loc);
+                    mPlaceIds1.add(curr_placeid);
                 }
                 else if (pageNum == 2){
                     mImgUrls2.add(curr_img);
                     mPlaceNames2.add(curr_name);
                     mPlaceLocations2.add(curr_loc);
+                    mPlaceIds2.add(curr_placeid);
                 }
                 else if (pageNum == 3) {
                     mImgUrls3.add(curr_img);
                     mPlaceNames3.add(curr_name);
                     mPlaceLocations3.add(curr_loc);
+                    mPlaceIds3.add(curr_placeid);
                 }
                 else {
                     Log.d(TAG, "initImgBitmaps: invalid page number");
@@ -310,13 +328,13 @@ public class ResultsActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.search_recycler_view);
         RecyclerViewAdapter adapter = null;
         if (pageNum == 1){
-            adapter = new RecyclerViewAdapter(this, mImgUrls1, mPlaceNames1, mPlaceLocations1);
+            adapter = new RecyclerViewAdapter(this, mImgUrls1, mPlaceNames1, mPlaceLocations1, mPlaceIds1);
         }
         else if (pageNum == 2){
-            adapter = new RecyclerViewAdapter(this, mImgUrls2, mPlaceNames2, mPlaceLocations2);
+            adapter = new RecyclerViewAdapter(this, mImgUrls2, mPlaceNames2, mPlaceLocations2, mPlaceIds2);
         }
         else if (pageNum == 3){
-            adapter = new RecyclerViewAdapter(this, mImgUrls3, mPlaceNames3, mPlaceLocations3);
+            adapter = new RecyclerViewAdapter(this, mImgUrls3, mPlaceNames3, mPlaceLocations3, mPlaceIds3);
         }
         else {
             Log.d(TAG, "initRecyclerView: invalid page number, won't make recyclerview");

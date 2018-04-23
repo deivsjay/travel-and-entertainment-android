@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 
 /**
@@ -63,8 +65,23 @@ public class Reviews extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_reviews, container, false);
+        final View view = inflater.inflate(R.layout.fragment_reviews, container, false);
+
+        // spinners
+        final Spinner googleYelp = (Spinner) view.findViewById(R.id.reviews_gy);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.google_yelp, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        googleYelp.setAdapter(adapter);
+        final Spinner order = (Spinner) view.findViewById(R.id.reviews_order);
+        ArrayAdapter<CharSequence> adapter1 = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.order, android.R.layout.simple_spinner_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        order.setAdapter(adapter1);
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

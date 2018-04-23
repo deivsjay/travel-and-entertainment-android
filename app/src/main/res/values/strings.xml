@@ -35,4 +35,25 @@
         <item>Travel Agency</item>
         <item>Zoo</item>
     </string-array>
+
+    <string-array name="travel_modes">
+        <item>Driving</item>
+        <item>Bicycling</item>
+        <item>Transit</item>
+        <item>Walking</item>
+    </string-array>
+
+    <string-array name="google_yelp">
+        <item>Google Reviews</item>
+        <item>Yelp Reviews</item>
+    </string-array>
+
+    <string-array name="order">
+        <item>Default Order</item>
+        <item>Highests Rating</item>
+        <item>Lowest Rating</item>
+        <item>Most Recent</item>
+        <item>Least Recent</item>
+    </string-array>
+
 </resources>

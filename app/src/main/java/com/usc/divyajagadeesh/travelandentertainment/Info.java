@@ -4,9 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 
 /**
@@ -28,6 +38,8 @@ public class Info extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private static final String TAG = "Info";
 
     public Info() {
         // Required empty public constructor
@@ -63,8 +75,113 @@ public class Info extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+        final View view =  inflater.inflate(R.layout.fragment_info, container, false);
+
+        // get json from place details activity
+        PlaceDetailsActivity activity = (PlaceDetailsActivity) getActivity();
+        JSONObject jsonObject = activity.getMyData();
+        try {
+            Log.d(TAG, "onCreateView in Info: " + jsonObject.toString(4));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // address
+        String address = "";
+        try {
+            address = jsonObject.getJSONObject("result").getString("formatted_address");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final TextView info_address = (TextView) view.findViewById(R.id.info_address);
+        info_address.setText(address);
+
+        // phone number
+        String phone_number = "";
+        try {
+            phone_number = jsonObject.getJSONObject("result").getString("formatted_phone_number");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final TextView info_phone_number = (TextView) view.findViewById(R.id.info_phone_number);
+        info_phone_number.setText(phone_number);
+        if (phone_number != ""){
+            Linkify.addLinks(info_phone_number, Linkify.ALL);
+        }
+
+        // price level
+        String price_level = "";
+        try {
+            price_level = jsonObject.getJSONObject("result").getString("price_level");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final TextView info_price_level = (TextView) view.findViewById(R.id.info_price_level);
+        if (price_level != ""){
+            int dollarSigns = Integer.parseInt(price_level);
+            price_level = "";
+            for (int i = 0; i < dollarSigns; i++){
+                price_level = price_level + "$";
+            }
+        }
+        info_price_level.setText(price_level);
+
+        // rating
+        String rating = "";
+        try {
+            rating = jsonObject.getJSONObject("result").getString("rating");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final RatingBar info_rating = (RatingBar) view.findViewById(R.id.info_rating);
+        if (rating != ""){
+            double ratingNum = Double.parseDouble(rating);
+            info_rating.setRating((float) ratingNum);
+        }
+        else {
+            info_rating.setVisibility(View.INVISIBLE);
+        }
+
+        // google page
+        String google_page = "";
+        try {
+            google_page = jsonObject.getJSONObject("result").getString("url");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final TextView info_google_page = (TextView) view.findViewById(R.id.info_google_page);
+        if (google_page != ""){
+            info_google_page.setClickable(true);
+            info_google_page.setMovementMethod(LinkMovementMethod.getInstance());
+            google_page = "<a href='" + google_page + "'>" + google_page + "</a>";
+            info_google_page.setText(Html.fromHtml(google_page));
+        }
+        else {
+            info_google_page.setText(google_page);
+        }
+
+        // website
+        String website = "";
+        try {
+            website = jsonObject.getJSONObject("result").getString("website");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final TextView info_website = (TextView) view.findViewById(R.id.info_website);
+        if (website != ""){
+            info_website.setClickable(true);
+            info_website.setMovementMethod(LinkMovementMethod.getInstance());
+            website = "<a href='" + website + "'>" + website + "</a>";
+            info_website.setText(Html.fromHtml(website));
+        }
+        else {
+            info_website.setText(website);
+        }
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

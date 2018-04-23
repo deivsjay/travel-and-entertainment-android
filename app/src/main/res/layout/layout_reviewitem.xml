@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp"
+    android:id="@+id/review_parent_layout">
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@mipmap/ic_launcher"
+        android:paddingRight="20dp"
+        android:id="@+id/review_image"/>
+
+    <LinearLayout
+        android:layout_width="290dp"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/review_image"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dummy Name"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"/>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:stepSize="1"
+            android:isIndicator="true"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:id="@+id/review_rating"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dummy Date"
+            android:textColor="#808080"
+            android:textSize="20dp"
+            android:id="@+id/review_date"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="Dummy Review"
+            android:textColor="#808080"
+            android:id="@+id/review"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
