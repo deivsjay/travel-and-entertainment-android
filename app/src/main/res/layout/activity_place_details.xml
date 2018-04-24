@@ -37,17 +37,20 @@
             android:singleLine="true"
             android:ellipsize="end"/>
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/share"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:background="@color/colorPrimary"
+            android:id="@+id/twitter"/>
 
-        <ImageView
+        <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/heart_fill_white"
-            android:padding="10dp"/>
+            android:src="@drawable/heart_outline_white"
+            android:padding="10dp"
+            android:background="@color/colorPrimary"/>
 
     </android.support.v7.widget.Toolbar>
     

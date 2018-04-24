@@ -1,5 +1,6 @@
 package com.usc.divyajagadeesh.travelandentertainment;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +21,7 @@ public class PlaceDetailsActivity extends AppCompatActivity implements
 
     private static final String TAG = "PlaceDetailsActivity";
     public JSONObject jsonObject;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,46 @@ public class PlaceDetailsActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        // make twitter url
+        String twitterAddress = "";
+        try {
+            twitterAddress = jsonObject.getJSONObject("result").getString("formatted_address");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String twitterUrl = "";
+        try {
+            if (jsonObject.getJSONObject("result").has("website")){
+                twitterUrl = jsonObject.getJSONObject("result").getString("website");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (twitterUrl == ""){
+            url = "http://twitter.com/intent/tweet?" +
+                    "text=Check out " + name +
+                    " located at " + twitterAddress +
+                    "&hashtags=TravelAndEntertainmentSearch";
+        }
+        else {
+            url = "http://twitter.com/intent/tweet?" +
+                    "text=Check out " + name +
+                    " located at " + twitterAddress +
+                    ". Website: " + twitterUrl +
+                    "&hashtags=TravelAndEntertainmentSearch";
+        }
+
+        // share to twitter
+        ImageButton twitter = (ImageButton)findViewById(R.id.twitter);
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(browserIntent);
             }
         });
 

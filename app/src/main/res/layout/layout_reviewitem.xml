@@ -25,7 +25,8 @@
             android:text="Dummy Name"
             android:textSize="20dp"
             android:textColor="@color/colorPrimary"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:id="@+id/review_name"/>
 
         <RatingBar
             android:layout_width="wrap_content"

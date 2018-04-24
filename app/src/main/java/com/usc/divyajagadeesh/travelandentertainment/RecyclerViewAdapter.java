@@ -83,6 +83,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
                         "placeid=" + placeid +
                         "&key=AIzaSyBplvW6nbbCeqKRlqT0pz9YsrYTYPWFowI";
+                Log.d(TAG, "onClick: " + url);
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

@@ -50,7 +50,7 @@
 
     <string-array name="order">
         <item>Default Order</item>
-        <item>Highests Rating</item>
+        <item>Highest Rating</item>
         <item>Lowest Rating</item>
         <item>Most Recent</item>
         <item>Least Recent</item>

@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="No Reviews"
         android:layout_gravity="center"
-        android:paddingTop="250dp"
+        android:paddingTop="200dp"
         android:textSize="20dp"
         android:id="@+id/no_reviews"/>
 
