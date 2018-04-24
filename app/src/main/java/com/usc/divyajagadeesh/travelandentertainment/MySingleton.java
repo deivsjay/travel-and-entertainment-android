@@ -1,5 +1,11 @@
 package com.usc.divyajagadeesh.travelandentertainment;
 
+/*
+* This is Google's code I found online.
+* This helps me do Volley calls.
+* The code can be found here: https://developer.android.com/training/volley/requestqueue.html
+* */
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.LruCache;

@@ -7,53 +7,70 @@
     android:layout_height="match_parent"
     tools:context=".PlaceDetailsActivity"
     android:orientation="vertical">
-    
+
     <android.support.v7.widget.Toolbar
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
         android:id="@+id/placeDetails_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <ImageButton
+            android:id="@+id/placeDetails_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_arrow_back_white_24dp"
-            android:padding="10dp"
             android:layout_marginRight="10dp"
-            android:id="@+id/placeDetails_back"
-            android:background="@color/colorPrimary"/>
+            android:background="@color/colorPrimary"
+            android:padding="10dp"
+            android:src="@drawable/ic_arrow_back_white_24dp" />
 
 
         <TextView
+            android:id="@+id/place_name"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:text="Dummy Place Name"
-            android:textSize="20dp"
-            android:id="@+id/place_name"
-            android:textColor="#FFF"
+            android:ellipsize="end"
             android:singleLine="true"
-            android:ellipsize="end"/>
+            android:text="Dummy Place Name"
+            android:textColor="#FFF"
+            android:textSize="20dp" />
 
         <ImageButton
+            android:id="@+id/twitter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/share"
-            android:padding="10dp"
             android:background="@color/colorPrimary"
-            android:id="@+id/twitter"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/heart_outline_white"
             android:padding="10dp"
-            android:background="@color/colorPrimary"/>
+            android:src="@drawable/share" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:padding="10dp"
+                android:src="@drawable/heart_outline_white"
+                android:visibility="visible"
+                android:id="@+id/placeDetails_notFavorited"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:padding="10dp"
+                android:src="@drawable/heart_fill_white"
+                android:visibility="gone"
+                android:id="@+id/placeDetails_favorited"/>
+
+        </RelativeLayout>
 
     </android.support.v7.widget.Toolbar>
-    
+
     <android.support.design.widget.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

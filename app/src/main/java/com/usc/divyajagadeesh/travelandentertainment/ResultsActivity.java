@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 public class ResultsActivity extends AppCompatActivity {
@@ -141,7 +142,7 @@ public class ResultsActivity extends AppCompatActivity {
 
     }
 
-    private JSONObject  getIncomingIntent() {
+    private JSONObject getIncomingIntent() {
         Log.d(TAG, "getIncomingIntent: checking for incoming intents.");
         JSONObject jsonObject = null;
         if (getIntent().hasExtra("json")){

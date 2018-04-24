@@ -38,13 +38,26 @@
 
 </LinearLayout>
 
-    <ImageView
+    <ImageButton
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:src="@drawable/heart_outline_black"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/results_favorite_image"/>
+        android:id="@+id/results_favorite_white"
+        android:background="#FFF"
+        android:visibility="visible"/>
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/heart_fill_red"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/results_favorite_red"
+        android:background="#FFF"
+        android:visibility="gone"/>
 
 </RelativeLayout>

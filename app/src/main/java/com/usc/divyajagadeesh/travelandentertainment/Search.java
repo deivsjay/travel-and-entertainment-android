@@ -191,7 +191,7 @@ public class Search extends Fragment implements GoogleApiClient.OnConnectionFail
                     validated = 1;
                 }
 
-                if (validated == 1){
+                if ((!keyword_check.getText().toString().trim().equals("")) && validated == 1){
 
                     // progress dialog while data is loading
                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
@@ -212,6 +212,7 @@ public class Search extends Fragment implements GoogleApiClient.OnConnectionFail
                         distanceNum = Integer.parseInt(distanceString);
                     }
                     distanceNum = distanceNum * 1609.344;
+                    final double distanceNumber = distanceNum;
 
                     // make request queue for api calls
                     RequestQueue queue = MySingleton.getInstance(getActivity().getApplicationContext()).
@@ -238,6 +239,40 @@ public class Search extends Fragment implements GoogleApiClient.OnConnectionFail
                                     double lngFromJSON = location.getDouble("lng");
                                     latitude = latFromJSON;
                                     longitude = lngFromJSON;
+
+                                    // make places api call
+                                    String url = "http://travelandentertainment.us-east-2.elasticbeanstalk.com/places?keyword=" +
+                                            keywordInput + "&type=" + categoryInput + "&radius=" + distanceNumber +
+                                            "&lat=" + latitude + "&lon=" + longitude;
+                                    Log.d(TAG, "onClick: " + url);
+                                    final double finalDistanceNum = distanceNumber;
+                                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                                        @Override
+                                        public void onResponse(JSONObject response) {
+
+                                            // transition to search results page
+                                            String json = response.toString();
+                                            Intent intent = new Intent(getActivity(), ResultsActivity.class);
+                                            intent.putExtra("json", json);
+                                            intent.putExtra("keyword", keywordInput);
+                                            intent.putExtra("type", categoryInput);
+                                            intent.putExtra("radius", Double.toString(finalDistanceNum));
+                                            intent.putExtra("lat", Double.toString(latitude));
+                                            intent.putExtra("lon", Double.toString(longitude));
+                                            progressDialog.hide();
+                                            startActivity(intent);
+
+                                        }
+                                    }, new Response.ErrorListener() {
+                                        @Override
+                                        public void onErrorResponse(VolleyError error) {
+                                            Log.d("response", "Something went wrong");
+                                            error.printStackTrace();
+                                        }
+                                    });
+
+                                    MySingleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest);
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -250,47 +285,41 @@ public class Search extends Fragment implements GoogleApiClient.OnConnectionFail
                         });
                         MySingleton.getInstance(getActivity()).addToRequestQueue(geolocation);
                     }
+                    else {
 
-                    // output all values
-                    Log.d("places", "keyword: " + keywordInput);
-                    Log.d("places", "cateogry: " + categoryInput);
-                    Log.d("places", "distance: " + distanceNum);
-                    Log.d("places", "location: " + locationInput);
-                    Log.d("places", "latitude: " + latitude);
-                    Log.d("places", "longitude: " + longitude);
+                        // make places api call
+                        String url = "http://travelandentertainment.us-east-2.elasticbeanstalk.com/places?keyword=" +
+                                keywordInput + "&type=" + categoryInput + "&radius=" + distanceNum +
+                                "&lat=" + latitude + "&lon=" + longitude;
+                        Log.d(TAG, "onClick: " + url);
+                        final double finalDistanceNum = distanceNum;
+                        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
 
-                    // make places api call
-                    String url = "http://travelandentertainment.us-east-2.elasticbeanstalk.com/places?keyword=" +
-                            keywordInput + "&type=" + categoryInput + "&radius=" + distanceNum +
-                            "&lat=" + latitude + "&lon=" + longitude;
-                    Log.d(TAG, "onClick: " + url);
-                    final double finalDistanceNum = distanceNum;
-                    JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
+                                // transition to search results page
+                                String json = response.toString();
+                                Intent intent = new Intent(getActivity(), ResultsActivity.class);
+                                intent.putExtra("json", json);
+                                intent.putExtra("keyword", keywordInput);
+                                intent.putExtra("type", categoryInput);
+                                intent.putExtra("radius", Double.toString(finalDistanceNum));
+                                intent.putExtra("lat", Double.toString(latitude));
+                                intent.putExtra("lon", Double.toString(longitude));
+                                progressDialog.hide();
+                                startActivity(intent);
 
-                            // transition to search results page
-                            String json = response.toString();
-                            Intent intent = new Intent(getActivity(), ResultsActivity.class);
-                            intent.putExtra("json", json);
-                            intent.putExtra("keyword", keywordInput);
-                            intent.putExtra("type", categoryInput);
-                            intent.putExtra("radius", Double.toString(finalDistanceNum));
-                            intent.putExtra("lat", Double.toString(latitude));
-                            intent.putExtra("lon", Double.toString(longitude));
-                            progressDialog.hide();
-                            startActivity(intent);
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.d("response", "Something went wrong");
+                                error.printStackTrace();
+                            }
+                        });
 
-                        }
-                    }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("response", "Something went wrong");
-                            error.printStackTrace();
-                        }
-                    });
-
-                    MySingleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest);
+                        MySingleton.getInstance(getActivity()).addToRequestQueue(jsonObjectRequest);
+                    }
                 }
 
             }

@@ -134,6 +134,24 @@ public class PlaceDetailsActivity extends AppCompatActivity implements
             }
         });
 
+        // toggle between favorited and not favorited
+        final ImageButton fav = (ImageButton)findViewById(R.id.placeDetails_favorited);
+        final ImageButton notFav = (ImageButton)findViewById(R.id.placeDetails_notFavorited);
+        fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fav.setVisibility(View.GONE);
+                notFav.setVisibility(View.VISIBLE);
+            }
+        });
+        notFav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fav.setVisibility(View.VISIBLE);
+                notFav.setVisibility(View.GONE);
+            }
+        });
+
     }
 
     @Override

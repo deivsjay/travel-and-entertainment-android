@@ -14,6 +14,13 @@ import java.util.List;
  * Created by NgocTri on 12/11/2017.
  */
 
+/*
+* This JSON parser was created by someone else. I found it from a tutorial online.
+* This helps me parse the JSON Google returns when creating a map. From there, I am able to make a polyline
+* that shows directions from one point to another point.
+* This was the tutorial: https://www.youtube.com/watch?v=jg1urt3FGCY&list=PLaJre3MbB0ygJD3vPWaIxJfgjXlTqo21o&index=8&t=0s
+* */
+
 public class DirectionsParser {
     /**
      * Returns a list of lists containing latitude and longitude from a JSONObject

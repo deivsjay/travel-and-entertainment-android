@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,9 @@ import com.google.android.gms.tasks.Task;
 
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
@@ -102,6 +106,60 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 MySingleton.getInstance(mContext).addToRequestQueue(jsonObjectRequest);
             }
         });
+
+        // toggle between favorited and not favorited
+        final ImageButton favWhite = holder.favoriteButtonWhite;
+        final ImageButton favRed = holder.favoriteButtonRed;
+        holder.favoriteButtonWhite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                favWhite.setVisibility(View.GONE);
+                favRed.setVisibility(View.VISIBLE);
+
+                // get json object
+                String url = "https://maps.googleapis.com/maps/api/place/details/json?" +
+                        "placeid=" + placeid +
+                        "&key=AIzaSyBplvW6nbbCeqKRlqT0pz9YsrYTYPWFowI";
+                Log.d(TAG, "onClick: " + url);
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // write to internal storage
+//                        FileOutputStream fos = null;
+//                        String stringResponse = response.toString();
+//                        try {
+//                            fos = mContext.openFileOutput(placeid, Context.MODE_PRIVATE);
+//                            fos.write(stringResponse.getBytes());
+//                        } catch (FileNotFoundException e) {
+//                            e.printStackTrace();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        if (fos != null){
+//                            try {
+//                                fos.close();
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
+                MySingleton.getInstance(mContext).addToRequestQueue(jsonObjectRequest);
+
+            }
+        });
+        holder.favoriteButtonRed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                favWhite.setVisibility(View.VISIBLE);
+                favRed.setVisibility(View.GONE);
+            }
+        });
     }
 
     @Override
@@ -115,6 +173,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView name;
         TextView location;
         RelativeLayout placeLayout;
+        ImageButton favoriteButtonWhite;
+        ImageButton favoriteButtonRed;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -122,6 +182,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             name = itemView.findViewById(R.id.results_name);
             location = itemView.findViewById(R.id.results_location);
             placeLayout = itemView.findViewById(R.id.place_layout);
+            favoriteButtonWhite = itemView.findViewById(R.id.results_favorite_white);
+            favoriteButtonRed = itemView.findViewById(R.id.results_favorite_red);
         }
     }
 
